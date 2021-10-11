@@ -25,7 +25,15 @@ if __name__ == '__main__':
              "و میداننــد کــه کالا یــی کــه قــرار اســت بــه دستشـان برسـد از کیفیـت بالا یـی برخـوردار اسـت . "
     sample = clean(sample)
     sample = sentences(sample)
-    tagger = POSTagger(model=r"C:\Users\Alireza\PycharmProjects\InformationRetrival\resourses\postagger.model")
+    tagger = POSTagger(model=r"")
+    tokens_list = []
+    tags_list = []
     for sen in sample:
-        tokens = word_tokenize('ما بسیار کتاب می‌خوانیم')
-        print(tagger.tag(tokens))
+        tokens_list.append(word_tokenize(sen))
+        tags_list.extend(tagger.tag(sen))
+
+    lemmatizer = Lemmatizer()
+    lemmatized_words = []
+    for tag in tags_list:
+        lemmatized_words.append(lemmatizer.lemmatize(tag[0], pos=tag[1]))
+
