@@ -25,9 +25,12 @@ if __name__ == '__main__':
              "اینترنتــی معتبــر خریــد خــود را انجــام میدهنــد به " \
              "نوعــی از اصالــت کالا ی خــود اطمینــان دارنــد " \
              "و میداننــد کــه کالا یــی کــه قــرار اســت بــه دستشـان برسـد از کیفیـت بالا یـی برخـوردار اسـت . "
+    
     sample = clean(sample)
     sample = sentences(sample)
+    
     tagger = POSTagger(model=r"/home/alireza/projects/python/InformationRetrivalCourseProjects/res/postagger.model")
+
     tokens_list = []
     tags_list = []
     for sen in sample:
