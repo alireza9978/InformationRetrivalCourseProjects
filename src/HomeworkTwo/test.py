@@ -91,28 +91,21 @@ if __name__ == '__main__':
     tf_idf_queries = model.transform(query_df_cleaned.to_list())
     distances = cosine_similarity(tf_idf_queries, tf_idf_plots)
     for i, row in enumerate(distances):
-        main_df.loc[row.argsort()[:10]].to_csv("../../result/similar_plots/query_{}_similar_plots.csv".format(i))
+        main_df.loc[row.argsort()[:5]].to_csv("../../result/similar_plots/query_{}_similar_plots.csv".format(i + 1),
+                                              index=False)
 
+    # calculate distance with old method
     # all_words_set = sorted(set(np.concatenate(all_df_tokenized.to_list()).tolist()))
-    #
-    #
     # def vectorise(temp_list):
     #     result = np.unique(temp_list, return_counts=True)
     #     plot_words = dict(zip(result[0], result[1]))
     #     return pd.Series(plot_words, index=all_words_set)
-    #
-    #
     # tf_df = all_df_tokenized.swifter.apply(vectorise)
     # tf_idf_df = tf_df.swifter.apply(lambda x: x / x.sum())
-    #
     # # queries tf.idf
     # queries_tf_idf = tf_idf_df.iloc[0:10]
-    # print(queries_tf_idf)
-    #
     # # plots tf.idf
     # plots_tf_idf = tf_idf_df.iloc[11:]
     # print(plots_tf_idf)
-    #
-    # b = sparse.csr_matrix(plots_tf_idf)
     # distances = cosine_similarity(queries_tf_idf, plots_tf_idf)
     # print(distances)
