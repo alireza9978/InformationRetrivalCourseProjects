@@ -1,3 +1,5 @@
+import math
+
 import pandas as pd
 from selenium import webdriver
 
@@ -20,17 +22,23 @@ def load_all_course_in_subject(browser: webdriver.Firefox, subject_data):
                "course_credential", "course_level", "course_duration", "course_language", "course_caption_languages",
                "overview", "syllabus"]
     subject_df = pd.DataFrame()
-    # for i in range(1, math.ceil(int(subject_data[2]) / 15)):
-    for i in range(1, 3):
+    # for i in range(1, 3):
+    total_pages = math.ceil(int(subject_data[2]) / 15)
+    print(f"total pages is {total_pages} in subject {subject_data[0]}")
+    for i in range(1, total_pages):
         temp_page = subject_data[1] + f"?page={i}"
         course_urls = extract_course_urls_from_single_page(browser, temp_page)
         for url in course_urls:
+            if url.endswith("/classroom"):
+                url = url[:-10]
             temp_course_data = extract_course_info_from_single_page(browser, url)
             temp_course_data = pd.Series(temp_course_data, index=columns)
             subject_df = subject_df.append(temp_course_data, ignore_index=True)
+        print(f"{i} from {subject_data[0]} finished")
 
     subject_df = subject_df[columns]
     subject_df["subject"] = subject_data[0]
+
     return subject_df
 
 
@@ -146,7 +154,15 @@ def extract_course_urls_from_single_page(browser: webdriver.Firefox, url):
 
 def crawl():
     initial_url = "https://www.classcentral.com/subjects"
-    driver = webdriver.Firefox()
+    # driver = webdriver.Chrome("../../res/chromedriver")
+
+    profile = webdriver.FirefoxProfile()
+    # 1 - Allow all images
+    # 2 - Block all images
+    # 3 - Block 3rd party images
+    profile.set_preference("permissions.default.image", 2)
+    driver = webdriver.Firefox(firefox_profile=profile)
+
     try:
         dataset = pd.DataFrame()
         driver.get(initial_url)
@@ -155,6 +171,7 @@ def crawl():
         for data in subjects_data:
             subject_df = load_all_course_in_subject(driver, data)
             dataset = pd.concat([dataset, subject_df])
+            dataset.to_csv("dataset.csv")
 
         dataset.to_csv("dataset.csv")
         driver.close()
