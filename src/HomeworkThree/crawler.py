@@ -110,7 +110,10 @@ def extract_course_info_from_single_page(browser: webdriver.Firefox, url):
                 elif item_classes.__contains__("icon-clock-charcoal"):
                     course_duration = item.find_element_by_css_selector("span").text
                 elif item_classes.__contains__("icon-subtitles-charcoal"):
-                    course_caption_languages = item.find_element_by_css_selector("span").text
+                    for inner_item in item.find_elements_by_css_selector("span"):
+                        if inner_item.get_attribute("class") == "text-2 margin-left-small line-tight":
+                            course_caption_languages = inner_item.text
+
                 elif item_classes.__contains__("icon-level-charcoal"):
                     course_level = item.find_element_by_css_selector("span").text
             except Exception:
