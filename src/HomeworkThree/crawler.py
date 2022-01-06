@@ -17,7 +17,7 @@ def get_subject_page_url(browser: webdriver.Firefox):
     return results
 
 
-def load_all_course_in_subject(browser: webdriver.Firefox, subject_data):
+def load_all_course_in_subject(browser: webdriver.Firefox, subject_data, index):
     columns = ["course_name", "course_instructor_site", "course_site", "course_instructor", "course_cost",
                "course_credential", "course_level", "course_duration", "course_language", "course_caption_languages",
                "overview", "syllabus"]
@@ -25,7 +25,7 @@ def load_all_course_in_subject(browser: webdriver.Firefox, subject_data):
     # for i in range(1, 3):
     total_pages = math.ceil(int(subject_data[2]) / 15)
     print(f"total pages is {total_pages} in subject {subject_data[0]}")
-    for i in range(1, total_pages):
+    for i in range(index, total_pages):
         temp_page = subject_data[1] + f"?page={i}"
         course_urls = extract_course_urls_from_single_page(browser, temp_page)
         for url in course_urls:
@@ -35,6 +35,7 @@ def load_all_course_in_subject(browser: webdriver.Firefox, subject_data):
             temp_course_data = pd.Series(temp_course_data, index=columns)
             subject_df = subject_df.append(temp_course_data, ignore_index=True)
         print(f"{i} from {subject_data[0]} finished")
+        subject_df.to_csv(f"temp {subject_data[0]}.csv", index=False)
 
     subject_df = subject_df[columns]
     subject_df["subject"] = subject_data[0]
@@ -170,9 +171,10 @@ def crawl():
         dataset = pd.DataFrame()
         driver.get(initial_url)
 
+        start = 1
         subjects_data = get_subject_page_url(driver)
         for data in subjects_data:
-            subject_df = load_all_course_in_subject(driver, data)
+            subject_df = load_all_course_in_subject(driver, data, start)
             dataset = pd.concat([dataset, subject_df])
             dataset.to_csv("dataset.csv")
 
