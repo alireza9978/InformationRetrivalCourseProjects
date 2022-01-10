@@ -171,12 +171,13 @@ def crawl():
         dataset = pd.DataFrame()
         driver.get(initial_url)
 
-        start = 1
+        start = 331
         subjects_data = get_subject_page_url(driver)
-        for data in subjects_data:
+        for data in subjects_data[5:]:
             subject_df = load_all_course_in_subject(driver, data, start)
             dataset = pd.concat([dataset, subject_df])
             dataset.to_csv("dataset.csv")
+            start = 1
 
         dataset.to_csv("dataset.csv")
         driver.close()
