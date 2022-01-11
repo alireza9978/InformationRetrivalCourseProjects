@@ -5,3 +5,5 @@
 /data/HW1/*
 /result
 /src/HomeworkThree/geckodriver.log
+/src/HomeworkThree/dataset_processed.csv
+/data/FinalProject/*.csv
