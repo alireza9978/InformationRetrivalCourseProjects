@@ -1,0 +1,24 @@
+GET dataset/_search
+{
+  "aggs": {
+    "EachSubject": {
+      "terms": {
+        "field": "subject"
+      },
+      "aggs": {
+        "MaxRecordDate": {
+          "terms": {
+            "field": "cost"
+          },
+          "aggs": {
+            "AvgCostSubject": {
+              "avg": {
+                "field": "cost"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

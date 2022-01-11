@@ -1,0 +1,6 @@
+GET /dataset/_count
+{
+  "query": {
+     "match_all": { }
+  }
+}

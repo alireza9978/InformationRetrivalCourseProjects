@@ -1,0 +1,18 @@
+GET dataset/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": {"course_language": "English"}},
+        { "match": {"course_level": "Beginner"}}
+      ]
+    }
+  },
+    "sort": [
+      {
+        "cost": {"order": "desc"}
+
+      }
+    ],
+    "size": 1
+}

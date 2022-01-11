@@ -1,0 +1,24 @@
+GET /_count
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "course_site": "edX"}},
+        { "match": {"subject": "Computer Science"}}
+      ]
+    }
+  }
+}
+
+GET /_search/?size=10000
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "course_site": "edX"}},
+        { "match": {"subject": "Computer Science"}}
+      ]
+    }
+  }
+}
+
