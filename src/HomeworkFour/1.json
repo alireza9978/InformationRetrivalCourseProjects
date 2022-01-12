@@ -4,3 +4,15 @@ GET /dataset/_count
      "match_all": { }
   }
 }
+
+// result
+{
+  "count" : 49154,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  }
+}
+

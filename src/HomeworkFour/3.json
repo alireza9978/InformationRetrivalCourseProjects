@@ -1,4 +1,4 @@
-GET dataset/_search
+GET /data/_search
 {
   "query": {
     "bool": {
@@ -10,9 +10,53 @@ GET dataset/_search
   },
     "sort": [
       {
-        "cost": {"order": "desc"}
+        "course_credential": {"order": "desc"}
 
       }
     ],
     "size": 1
+}
+
+{
+  "took" : 13,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 10000,
+      "relation" : "gte"
+    },
+    "max_score" : null,
+    "hits" : [
+      {
+        "_index" : "data",
+        "_type" : "_doc",
+        "_id" : "mxnTTX4B64JADiQo11bZ",
+        "_score" : null,
+        "_source" : {
+          "column1" : 1520,
+          "course_level" : "Beginner",
+          "overview" : "Building an online brand and outreach strategy is paramount to any social media planning and strategy. The vast amount of data, customer insights, platforms and networks are re-imagined each day, demanding the marketer to be a savvy predictor. This course will prepare you for a comprehensive approach to online advertising, detailing various analysis approaches and selecting the right networks and the right messages. You will explore relevant and trending concepts such as: social media ads, active users, advertising platforms, advertising strategy, advertising, hashtags, influencers, landing page, seo, ad spend, advertising options, email marketing, google adwords, lead generation, video ads, click-through rate, and content marketing. Be prepared to plan and allocate resources to the advertising that creates an impact.",
+          "course_name" : "Online Advertising & Social Media",
+          "subject" : "Business",
+          "course_site" : "edX",
+          "course_instructor_site" : "University of Maryland, College Park",
+          "course_language" : "English",
+          "course_cost" : "Free Online Course (Audit)",
+          "course_credential" : 499.0,
+          "course_instructor" : "Wendy Moe, Lauren Rhue, Yogesh Joshi",
+          "course_duration" : "4 weeks long, 3-5 hours a week",
+          "course_caption_languages" : "['English']"
+        },
+        "sort" : [
+          499.0
+        ]
+      }
+    ]
+  }
 }

@@ -1,4 +1,4 @@
-GET dataset/_search
+GET /data/_search
 {
   "aggs": {
     "EachSubject": {
@@ -6,19 +6,110 @@ GET dataset/_search
         "field": "subject"
       },
       "aggs": {
-        "MaxRecordDate": {
-          "terms": {
-            "field": "cost"
-          },
-          "aggs": {
-            "AvgCostSubject": {
-              "avg": {
-                "field": "cost"
-              }
-            }
+        "AvgCostSubject": {
+          "avg": {
+            "field": "course_credential"
           }
         }
       }
+    }
+  }
+}
+
+//result
+{
+  "took" : 49,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 10000,
+      "relation" : "gte"
+    },
+    "max_score" : 1.0,
+    "hits" : [],
+  },
+  "aggregations" : {
+    "EachSubject" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 4442,
+      "buckets" : [
+        {
+          "key" : "Programming",
+          "doc_count" : 11398,
+          "AvgCostSubject" : {
+            "value" : 100.0651375738257
+          }
+        },
+        {
+          "key" : "Business",
+          "doc_count" : 10165,
+          "AvgCostSubject" : {
+            "value" : 101.37061417130934
+          }
+        },
+        {
+          "key" : "Computer Science",
+          "doc_count" : 6447,
+          "AvgCostSubject" : {
+            "value" : 101.5902294032479
+          }
+        },
+        {
+          "key" : "Humanities",
+          "doc_count" : 3132,
+          "AvgCostSubject" : {
+            "value" : 96.09393419967871
+          }
+        },
+        {
+          "key" : "Social Sciences",
+          "doc_count" : 2603,
+          "AvgCostSubject" : {
+            "value" : 95.3797558708114
+          }
+        },
+        {
+          "key" : "Engineering",
+          "doc_count" : 2445,
+          "AvgCostSubject" : {
+            "value" : 107.57372960416164
+          }
+        },
+        {
+          "key" : "Science",
+          "doc_count" : 2288,
+          "AvgCostSubject" : {
+            "value" : 99.1974032387552
+          }
+        },
+        {
+          "key" : "Art & Design",
+          "doc_count" : 2198,
+          "AvgCostSubject" : {
+            "value" : 99.77660937756288
+          }
+        },
+        {
+          "key" : "Education & Teaching",
+          "doc_count" : 2123,
+          "AvgCostSubject" : {
+            "value" : 94.91374335373521
+          }
+        },
+        {
+          "key" : "Health & Medicine",
+          "doc_count" : 1912,
+          "AvgCostSubject" : {
+            "value" : 95.20741108259911
+          }
+        }
+      ]
     }
   }
 }
