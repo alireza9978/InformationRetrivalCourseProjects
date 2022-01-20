@@ -8,17 +8,15 @@ rating_df = pd.read_csv('../../data/FinalProject/rating.csv')
 
 rating_df.loc[rating_df["rating"] == -1, "rating"] = np.nan
 
-anime_tv = anime_df[anime_df['type'] == 'TV']
-
 # Join the two dataframes on the anime_id columns
-merged = rating_df.merge(anime_df, left_on='anime_id', right_on='anime_id', suffixes=['_user', ''])
-merged.rename(columns={'rating_user': 'user_rating'}, inplace=True)
+merged_df = rating_df.merge(anime_df, left_on='anime_id', right_on='anime_id', suffixes=['_user', ''])
+merged_df.rename(columns={'rating_user': 'user_rating'}, inplace=True)
 
 # For computing reasons I'm limiting the dataframe length to 10,000 users
-merged = merged[['user_id', 'name', 'user_rating']]
-unique_users_id = merged["user_id"].unique()
+merged_df = merged_df[['user_id', 'name', 'user_rating']]
+unique_users_id = merged_df["user_id"].unique()
 selected_users_id = np.random.choice(unique_users_id, 10000)
-merged_sub = merged[merged.user_id.isin(selected_users_id)]
+merged_sub = merged_df[merged_df.user_id.isin(selected_users_id)]
 
 pivot_table = merged_sub.pivot_table(index=['user_id'], columns=['name'], values='user_rating')
 # rows = users and columns = anime
@@ -56,6 +54,18 @@ def top_animes(anime_name):
 
 
 top_animes('Cowboy Bebop')
+###
+# No. 1: Cowboy Bebop: Tengoku no Tobira
+# No. 2: Samurai Champloo
+# No. 3: Tengen Toppa Gurren Lagann
+# No. 4: Mononoke Hime
+# No. 5: Trigun
+# No. 6: Baccano!
+# No. 7: Ghost in the Shell: Stand Alone Complex
+# No. 8: Sen to Chihiro no Kamikakushi
+# No. 9: Fullmetal Alchemist: Brotherhood
+# No. 10: Black Lagoon: The Second Barrage
+###
 
 #
 #
