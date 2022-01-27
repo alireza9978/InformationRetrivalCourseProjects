@@ -58,15 +58,21 @@ def test_model(model, name):
         print(anime_df.loc[index, "name"])
 
 
+def create_feature_df():
+    temp_anime_df = pd.read_csv('../../data/FinalProject/anime.csv')
+    temp_anime_df = convert_genre(temp_anime_df)
+    temp_anime_df = convert_type(temp_anime_df)
+    temp_anime_df = temp_anime_df[temp_anime_df.episodes != "Unknown"]
+    temp_anime_df = convert_input(temp_anime_df, "episodes", int)
+    temp_anime_df = temp_anime_df[~temp_anime_df.rating.isna()]
+    temp_anime_df = convert_input(temp_anime_df, "rating")
+    temp_anime_df = convert_input(temp_anime_df, "members", int)
+    return temp_anime_df
+
+
 if __name__ == '__main__':
-    anime_df = pd.read_csv('../../data/FinalProject/anime.csv')
-    anime_df = convert_genre(anime_df)
-    anime_df = convert_type(anime_df)
-    anime_df = anime_df[anime_df.episodes != "Unknown"]
-    anime_df = convert_input(anime_df, "episodes", int)
-    anime_df = anime_df[~anime_df.rating.isna()]
-    anime_df = convert_input(anime_df, "rating")
-    anime_df = convert_input(anime_df, "members", int)
+    anime_df = create_feature_df()
+    anime_df.to_csv("content_based_features.csv", index=False)
     print(anime_df.shape)
 
     trained_model = train_model(anime_df)

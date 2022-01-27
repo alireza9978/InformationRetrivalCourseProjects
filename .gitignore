@@ -7,3 +7,5 @@
 /src/HomeworkThree/geckodriver.log
 /src/HomeworkThree/dataset_processed.csv
 /data/FinalProject/*.csv
+/src/FinalProject/content_based_features.csv
+/src/FinalProject/collaborative_filtering_features.csv

@@ -31,17 +31,15 @@ normalized_pivot_table = pivot_table.apply(lambda x: (x - np.mean(x)) / (np.max(
 normalized_pivot_table.fillna(0, inplace=True)
 normalized_pivot_table = normalized_pivot_table.loc[(normalized_pivot_table != 0).any(axis=1)]
 normalized_pivot_table = normalized_pivot_table.T
+normalized_pivot_table.to_csv("collaborative_filtering_features.csv")
 
 # Our data needs to be in a sparse matrix format to be read by the following functions
 piv_sparse = sp.sparse.csr_matrix(normalized_pivot_table.values)
 
 item_similarity = cosine_similarity(piv_sparse)
-user_similarity = cosine_similarity(piv_sparse.T)
 
 # Inserting the similarity matrices into dataframe objects
 item_sim_df = pd.DataFrame(item_similarity, index=normalized_pivot_table.index, columns=normalized_pivot_table.index)
-user_sim_df = pd.DataFrame(user_similarity, index=normalized_pivot_table.columns,
-                           columns=normalized_pivot_table.columns)
 
 
 # This function will return the top 10 shows with the highest cosine similarity value
